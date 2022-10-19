@@ -39,4 +39,9 @@ RSpec.describe Faraday::FlatParamsEncoder do
     expect(subject.encode(params)).to eq('b=false&a=true')
     Faraday::FlatParamsEncoder.sort_params = true
   end
+
+  it 'encodes an array' do
+    params = [["a", 1], ['nil-value', nil], ['e'], ["x", 123], ['ea', []], ['n', [34, '!']], [:a, :b]]
+    expect(subject.encode(params)).to eq('a=1&nil-value&e&x=123&ea=&n=34&n=%21&a=b')
+  end
 end
